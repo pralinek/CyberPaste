@@ -1,7 +1,6 @@
 #SingleInstance Force
 #Maxmem
 
-
 ifExist, %A_ScriptDir%\cyberfiles\clipboards
 FileRemoveDir, %A_WorkingDir%\cyberfiles\clipboards,1
 
@@ -31,7 +30,7 @@ countminus = 0
 
 FileCreateDir, cyberfiles
 FileCreateDir, cyberfiles\clipboards
-FileCreateDir, cyberfiles\macros
+
 Fullpre = %A_ScriptDir%\cyberfiles\predefine.ini
 Fullpre2 = %A_ScriptDir%\cyberfiles\predefine2.ini
 macropre = %A_ScriptDir%\cyberfiles\template.ini
@@ -39,6 +38,8 @@ fmailini = %A_ScriptDir%\cyberfiles\fmail.ini
 settingsini = %A_ScriptDir%\cyberfiles\settingsini.ini
 clipboardsfile = %A_ScriptDir%\cyberfiles\clipboards
 macrosfile = %A_ScriptDir%\cyberfiles\macros
+
+
 
 
 ifNotExist, %A_ScriptDir%\cyberfiles\settingsini.ini
@@ -55,6 +56,9 @@ Iniwrite, 1, %settingsini%, middlekey
 
 
 
+
+
+
 brelease = false
 ks1 = false
 ks3 = false
@@ -67,7 +71,7 @@ onvar3 = true
 wvar7 = 200
 hvar7 = 20
 wvar1 = 175
-hvar1 = 32
+hvar1 = 30
 xvar1 := A_ScreenWidth - wvar1 - 50
 yvar1:= A_Screenheight - hvar1 - 70
 xvar2 := A_ScreenWidth - 430
@@ -129,20 +133,16 @@ Gui 1: Add, button, x155 y0 w25 h20 gmoveon, --
 Gui 1: Add, button, x155 y20 w25 h20 gpause, | |
 Gui 1: Add, button, x155 y40 w25 h20 gpre, M
 
-Gui 1: font, normal cwhite s8, Segoe UI 
+Gui 1: font, normal cwhite s9, Segoe UI 
 Gui 1: Add, text, x5 y3 vText1 w140, 
 Gui 1: Add, text, x5 y16 vText2 w140, 
 Gui 1: Add, text, x5 y29 cgreen vVALUE vTextMain gTextmain w140,
-Gui 1: font, cwhite s8, Segoe UI 
+Gui 1: font, cwhite s9, Segoe UI 
 Gui 1: Add, text, x5 y42 vText4 w140, 
 Gui 1:  +lastfound +AlwaysOnTop +ToolWindow -Caption 
 WinSet, TransColor, color 160
 ;---------------------------------------------------------------------------------------------------------------------------
-Gui 7: Show, x%xvar6%  y%yvar6% w40 h0.5
-Gui 7: font, cwhite s12, Segoe UI
-Gui 7: Add, button, x0 y0 w45 h25 gplay, Play
-Gui 7:  +lastfound +AlwaysOnTop +ToolWindow -Caption 
-gui 7: hide
+
 ;-------------------------------------------------------------------------------------------------------------------------
 return
 
@@ -242,7 +242,15 @@ Gui 4: Add, button, x500 y270 vsetapply gsetapply, Apply
 
 
 
- GuiControl 4: hide, texto
+
+
+
+
+
+
+
+
+    GuiControl 4: hide, texto
 	GuiControl 4: hide, textcc
 	GuiControl 4: hide, textbcc
 	GuiControl 4: hide, textsubject
@@ -655,7 +663,7 @@ if predefajn !=
 if kontrol =
 {
 Iniwrite, %view%, %Fullpre%, %predefajn%
-FileAppend,%ClipboardAll%,cyberfiles\macros\%predefajn%.clip,
+
 
 
 IniRead, list, %fullpre%
@@ -667,7 +675,7 @@ Loop, parse, list, |
 {
 arraytest.push(A_loopfield)
 Gui +LastFound
-GuiControl, Choose, ListBox1, %A_index%
+;GuiControl, Choose, ListBox1, %A_index%
 IniRead, preview, %Fullpre%,%A_loopfield%,
 stringreplace, preview, preview, $enter$,`n,All
 GuiControl,4:, Viewp, %preview%
@@ -699,7 +707,8 @@ GuiControl,4:, Viewp, %preview%
 
 ~+*::
 clipstore = %clipboardall%
-
+clipboard =
+sleep, 20
 input, pred, I V L20, {space},
 loop
 {
@@ -726,11 +735,9 @@ return
 }
 else
 {
-FileRead,Clipboard,*c %macrosfile%\%pred%.clip
-Clipwait, 2,1
+clipboard = %pred0%
 send ^v
-Clipwait, 2,1
-sleep, 500
+sleep, 1000
 clipboard = %clipstore%
 clipstore =
 return
@@ -799,7 +806,7 @@ if mkontrol =
 		{
 		arraymacro.push(A_loopfield)
 		Gui +LastFound
-		GuiControl, Choose, mylistboxmacro, %A_index%
+		;GuiControl, Choose, mylistboxmacro, %A_index%
 		IniRead, preview2, %macropre%,%A_loopfield%,
 		stringreplace, preview2, preview2, $enter$,`n,All
 		GuiControl,4:, viewp2, %preview2%
@@ -948,6 +955,7 @@ return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAils;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ~+@::
+
 Nrvarmacro := nrshortarray[countchange]
 nrvarmacro1 := nrvarmacro - 1
 nrvarmacro2 := nrvarmacro - 2
@@ -958,7 +966,7 @@ nrvarmacro6 := nrvarmacro - 6
 nrvarmacro7 := nrvarmacro - 7
 nrvarmacro8 := nrvarmacro - 8
 nrvarmacro9 := nrvarmacro - 9
-
+clip0 := Mainarray[countchange]
 clip1 := mainarray[countchange - nrvarmacro1]
 clip2 := mainarray[countchange - nrvarmacro2]
 clip3 := mainarray[countchange - nrvarmacro3]
@@ -995,7 +1003,7 @@ stringreplace, mailbody, mailbody, clip6, %clip6%, All
 stringreplace, mailbody, mailbody, clip7, %clip7%, All
 stringreplace, mailbody, mailbody, clip8, %clip8%, All
 stringreplace, mailbody, mailbody, clip9, %clip9%, All
-
+stringreplace, mailbody, mailbody, clip0, %clip0%, All
 
 stringreplace, mailto, mailto, clip1, %clip1%, All
 stringreplace, mailto, mailto, clip2, %clip2%, All
@@ -1006,7 +1014,7 @@ stringreplace, mailto, mailto, clip6, %clip6%, All
 stringreplace, mailto, mailto, clip7, %clip7%, All
 stringreplace, mailto, mailto, clip8, %clip8%, All
 stringreplace, mailto, mailto, clip9, %clip9%, All
-
+stringreplace, mailto, mailto, clip0, %clip0%, All
 
 stringreplace, mailcc, mailcc, clip1, %clip1%, All
 stringreplace, mailcc, mailcc, clip2, %clip2%, All
@@ -1017,7 +1025,7 @@ stringreplace, mailcc, mailcc, clip6, %clip6%, All
 stringreplace, mailcc, mailcc, clip7, %clip7%, All
 stringreplace, mailcc, mailcc, clip8, %clip8%, All
 stringreplace, mailcc, mailcc, clip9, %clip9%, All
-
+stringreplace, mailto, mailto, clip0, %clip0%, All
 
 stringreplace, mailbcc, mailbcc, clip1, %clip1%, All
 stringreplace, mailbcc, mailbcc, clip2, %clip2%, All
@@ -1028,7 +1036,7 @@ stringreplace, mailbcc, mailbcc, clip6, %clip6%, All
 stringreplace, mailbcc, mailbcc, clip7, %clip7%, All
 stringreplace, mailbcc, mailbcc, clip8, %clip8%, All
 stringreplace, mailbcc, mailbcc, clip9, %clip9%, All
-
+stringreplace, mailbcc, mailbcc, clip0, %clip0%, All
 
 stringreplace, mailsubject, mailsubject, clip1, %clip1%, All
 stringreplace, mailsubject, mailsubject, clip2, %clip2%, All
@@ -1039,7 +1047,7 @@ stringreplace, mailsubject, mailsubject, clip6, %clip6%, All
 stringreplace, mailsubject, mailsubject, clip7, %clip7%, All
 stringreplace, mailsubject, mailsubject, clip8, %clip8%, All
 stringreplace, mailsubject, mailsubject, clip9, %clip9%, All
-
+stringreplace, mailsubject, mailsubject, clip0, %clip0%, All
 
 try
 {
@@ -1248,7 +1256,7 @@ clipboard :=
 
 Send ^c
 clipwait, 2, 1
-Clipsaved := clipboardall
+
 
 if clipboard !=
 {
@@ -1264,7 +1272,7 @@ count1 := count2 - 1
 }
 clip1 := clipboard
 Mainarray.push(clip1)
-FileAppend,%ClipboardAll%,cyberfiles\clipboards\%counttotal%.clip,
+
 shortclip := substr(clip1, 1, 60)
 shortclip:=RegExReplace(shortclip,"^\R|\R>\d*$")
 shortclip:=RegExReplace(shortclip, "\R+\R", "`r`n") 
@@ -1273,8 +1281,10 @@ shortclip:=RegExReplace(shortclip, "\R+\R", "`r`n")
 
 shortarray.push(shortclip)
 Nrshortarray.push(countcontrol)
-clipboard =
-sleep 10
+
+
+
+
 
 Nrvar1 := Nrshortarray[counttotal]
 Nrvar2 := Nrshortarray[count1]
@@ -1284,13 +1294,18 @@ linevar1 := shortarray[counttotal]
 linevar2 := shortarray[count1]
 linevar3 := shortarray[count2]
 
+
+
 Guicontrol, 2: ,Textmain, %linevar1%
 Guicontrol, 1: ,TextMain, %nrvar1%.%linevar1%
 Guicontrol, 1: ,Text1, %nrvar2%.%linevar2%
 Guicontrol, 1: ,Text2, %nrvar3%.%linevar3%
 Guicontrol, 1: ,Text4, 
+sleep 10
+tooltip, %Nrvar1%. %linevar1%
+SetTimer, RemoveToolTip, -1000
 
-
+FileAppend,%ClipboardAll%,cyberfiles\clipboards\%counttotal%.clip,
 
 if onvar2 = false
 {
@@ -1298,17 +1313,12 @@ fullview := mainarray[countchange]
 Guicontrol, 3:, view, %fullview%
 }
 
-tooltip, %Nrvar1%. %linevar1%
-SetTimer, RemoveToolTip, -1500
-clipboard = %clipsaved%
-clipsaved = 
+
 clipchange = false
 return
 }
 else
-{
-clipboard = %clipsaved%
-clipsaved = 
+{ 
 return
 }
 
@@ -1458,7 +1468,7 @@ return
 ;releaseall-------------------------------------------------------------------------------------------------------------
 
 releaseall8:
-gui, font, s12 cRed bold
+gui, font, s9 cRed bold
 GuiControl, Font, Textmain
 
 nrvarallview =
@@ -1497,7 +1507,7 @@ Settimer, release00, -2000
 return
 
 pasteClip2:	
-gui, font, s8 cRed bold
+gui, font, s9 cRed bold
 GuiControl, Font, Textmain									
 countcontrol = 0
 linevar1 := Mainarray[countchange]
@@ -1506,7 +1516,6 @@ clipboard = %linevarall%
 else
 FileRead,Clipboard,*c %clipboardsfile%\%countchange%.clip
 clipwait, 2, 1
-sleep, 50
 Send, ^v
 return
 
@@ -1521,16 +1530,19 @@ return
 
 
 ^b::
-gui, font, s13 cRed bold
+gui, font, s9 cRed bold
 GuiControl, Font, Textmain										
 countcontrol = 0
 return
 
 
-
+#if ctrlc
+{
 $^c::
 gosub, fcopy
 return
+}
+#if
 ~^Lbutton::
 gosub, fcopy
 return
@@ -1558,10 +1570,10 @@ return
 ^space::
 Gosub, pasteClip2
 return
-~Lbutton & wheelup::
+~Lbutton & ~wheelup::
 Gosub, Fup
 return
-~Lbutton & wheeldown::
+~Lbutton & ~wheeldown::
 Gosub, Fdown
 return
 ~$mbutton::
@@ -1574,6 +1586,7 @@ return
 ~Lbutton & mbutton::
 gosub, releaseall8
 return
+
 
 
 
