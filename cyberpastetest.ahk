@@ -628,14 +628,14 @@ MyListBox1:
     if A_GuiEvent <> click
         GuiControlGet, MyListBox1 
     IniRead, preview, %Fullpre%,%mylistbox1%,
-    stringreplace, preview, preview, $enter$,`n,All
+    
     GuiControl,4:, Viewp, %preview%
 return
 
 create:
     arraytest := {}
     Guicontrolget, View
-    stringreplace, view, view,`n, $enter$, All
+    
     GuiControlGet,predefajn
     stringreplace,predefajn,predefajn,A_space,,All
     Iniread, kontrol, %fullpre%, %predefajn%
@@ -643,7 +643,7 @@ create:
         if predefajn !=
         if kontrol =
     {
-        Iniwrite, %view%, %Fullpre%, %predefajn%
+        Iniwrite, %view%, %Fullpre%, %predefajn%, %predefajn%
         
         
         
@@ -658,7 +658,7 @@ create:
                 Gui +LastFound
             ;GuiControl, Choose, ListBox1, %A_index%
             IniRead, preview, %Fullpre%,%A_loopfield%,
-                stringreplace, preview, preview, $enter$,`n,All
+                
             GuiControl,4:, Viewp, %preview%
         }
         
@@ -680,7 +680,7 @@ ok:
             Gui +LastFound
             GuiControl, Choose, ListBox1, %A_index%
             IniRead, preview, %Fullpre%,%A_loopfield%,
-                stringreplace, preview, preview, $enter$,`n,All
+                
             GuiControl,4:, Viewp, %preview%
             
         }
@@ -703,7 +703,7 @@ ok:
             if pred0 !=
             {
                 sendinput,{backspace %testlength%}
-                stringreplace, pred0, pred0, $enter$, `n,All
+                
                 ifWinActive, ahk_class RemoteToolsFrame
                 {
                     sendinput, %pred0%
