@@ -627,7 +627,7 @@ return
 MyListBox1:
     if A_GuiEvent <> click
         GuiControlGet, MyListBox1 
-    IniRead, preview, %Fullpre%,%mylistbox1%,
+    IniRead, preview, %Fullpre%,%mylistbox1%
     
     GuiControl,4:, Viewp, %preview%
 return
@@ -643,11 +643,11 @@ create:
         if predefajn !=
         if kontrol =
     {
-        Iniwrite, %view%, %Fullpre%, %predefajn%, %predefajn%
+        Iniwrite, %view%, %Fullpre%, %predefajn%,%predefajn%
         
         
         
-        IniRead, list, %fullpre%
+        IniRead, list, %fullpre%, 
         Stringreplace, list, list, `n, |, all
         GuiControl, , Mylistbox1, |
         GuiControl, , Mylistbox1, %list%
@@ -657,7 +657,7 @@ create:
             arraytest.push(A_loopfield)
                 Gui +LastFound
             ;GuiControl, Choose, ListBox1, %A_index%
-            IniRead, preview, %Fullpre%,%A_loopfield%,
+            IniRead, preview, %Fullpre%,%A_loopfield%
                 
             GuiControl,4:, Viewp, %preview%
         }
@@ -679,7 +679,7 @@ ok:
         {
             Gui +LastFound
             GuiControl, Choose, ListBox1, %A_index%
-            IniRead, preview, %Fullpre%,%A_loopfield%,
+            IniRead, preview, %Fullpre%,%A_loopfield%
                 
             GuiControl,4:, Viewp, %preview%
             
@@ -698,7 +698,10 @@ ok:
         {
             
             testLength := StrLen(pred) + 2
-            Iniread, pred0, %fullpre%, %pred%
+            Iniread, pred0, %fullpre%, %pred%,
+            word_array := StrSplit(pred0, "=",,2) 
+            pred0 := word_array[2]
+            
             sleep, 20
             if pred0 !=
             {
@@ -747,12 +750,15 @@ loop
     {
         
         testLength := StrLen(pred) + 2
-        Iniread, pred0, %fullpre%, %pred%
+        Iniread, pred0, %fullpre%, %pred%,
+            word_array := StrSplit(pred0, "=",,2) 
+            pred0 := word_array[2]
+
         sleep, 20
         if pred0 !=
         {
             sendinput,{backspace %testlength%}
-            stringreplace, pred0, pred0, $enter$, `n,All
+            
             ifWinActive, ahk_class RemoteToolsFrame
             {
                 sendinput, %pred0%
@@ -787,12 +793,11 @@ return
 modifybutton:
     GuiControlGet, ListBox1
     Guicontrolget, viewp
-    StringReplace, viewp, viewp,`n,$enter$,All  
+    
     
     IniDelete, %Fullpre%, %listbox1%, 
     
-    Iniwrite, %viewp%, %Fullpre%, %listbox1%
-    StringReplace, viewp, viewp,$enter$, `n,All
+    Iniwrite, %viewp%, %Fullpre%, %listbox1%, %listbox1%
     msgbox, predefined modified to: `n`n%viewp%
 return
 
