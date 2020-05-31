@@ -1,5 +1,5 @@
-# CyberPaste-formatting-
-CyberPaste with formatting
+# CyberPaste
+
 Simple and intuitional clipboard storage app. Be careful! Usage is addicting.
 
 Windows clipboard can store only one item. When you copy something else, previous clipboard contents is owerwritten. So you can not find clipboard history by the means of Windows OS.
