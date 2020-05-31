@@ -46,8 +46,8 @@ ifNotExist, %A_ScriptDir%\cyberfiles\settingsini.ini
 {
 fileappend, %settingsini%
 Iniwrite, 1, %settingsini%, Handchoice
-Iniwrite, 1, %settingsini%, ridkeyboard
-Iniwrite, 1, %settingsini%, ctrlleft
+Iniwrite, 0, %settingsini%, ridkeyboard
+Iniwrite, 1, %settingsini%, keyboardcontrol
 Iniwrite, 1, %settingsini%,ctrlright
 Iniwrite, 1, %settingsini%, updownmouse
 Iniwrite, 1, %settingsini%, ctrlc
@@ -73,7 +73,7 @@ hvar7 = 20
 wvar1 = 175
 hvar1 = 30
 xvar1 := A_ScreenWidth - wvar1 - 50
-yvar1:= A_Screenheight - hvar1 - 70
+yvar1:= A_Screenheight - hvar1 - 100
 xvar2 := A_ScreenWidth - 430
 yvar2:= A_Screenheight - 92
 xvar4 := A_ScreenWidth - 900
@@ -88,7 +88,7 @@ yvar7:= A_Screenheight - hvar1 - 180
 ;settings__________________________________________________________________________________
 Iniread, Handchoice, %settingsini%, Handchoice
 Iniread, ridkeyboard, %settingsini%, ridkeyboard 
-Iniread, ctrlleft, %settingsini%, ctrlleft
+Iniread, keyboardcontrol, %settingsini%, keyboardcontrol
 Iniread, ctrlright, %settingsini%, ctrlright
 Iniread, updownmouse, %settingsini%, updownmouse
 Iniread, ctrlc, %settingsini%, ctrlc
@@ -229,15 +229,15 @@ GuiControl, 4:, mylistboxmail, %listmail2%
 
 
 ;settings
+Gui 4: font, normal cwhite s9, Segoe UI
+Gui 4: Add, Checkbox, x100 y20 vhandchoice, #Standard controls`n -Copy - Ctrl + left click`n -Paste - Ctrl + right click`n -Change clipboard - ctrl+mouse wheel up/down.`n -Paste All- ctrl plus middle click to see the view then press ctrl + right click to paste all.
+Gui 4: Add, CheckBox, vridkeyboard, #Use only mouse to control the application. `n -Copy with middle mouse key.`n -Choose clipboard by holding left mouse key + mouse wheel up/mouse wheel down.`n -Paste by holding left and clicking right.`n - Paste All - hold left mouse key + click middle key to see the view,`n then paste by clicking right mouse key when still holding left mouse key.
+Gui 4: Add, CheckBox, vkeyboardcontrol, #Keyboard control `n -Change clipboard - Ctrl + up/down arrow `n -Paste - ctrl+spacebar.`n -Paste All - ctrl+shift+spacebar
+;Gui 4: Add, CheckBox, vctrlright, Paste with control+right mouse button?
+;Gui 4: Add, CheckBox, vupdownmouse, Change clipboards with CTRL - mouse wheel down/up?
+Gui 4: Add, CheckBox, vctrlc, #Use Ctrl+C with the script. 
+;Gui 4: Add, CheckBox, vmiddlekey, Copy with middle mouse key?
 Gui 4: font, normal cwhite s12, Segoe UI
-gui 4: Add, text, x20 y20 vhand, You are
-Gui 4: Add, Checkbox, x100 y20 vhandchoice , I am left-handed
-Gui 4: Add, CheckBox, vridkeyboard, Copy/Paste/choose without a keyboard? 
-Gui 4: Add, CheckBox, vctrlleft, Copy with control+left mouse button?
-Gui 4: Add, CheckBox, vctrlright, Paste with control+right mouse button?
-Gui 4: Add, CheckBox, vupdownmouse, Change clipboards with CTRL - mouse wheel down/up?
-Gui 4: Add, CheckBox, vctrlc, Use ctrl+c with the script?
-Gui 4: Add, CheckBox, vmiddlekey, Copy with middle mouse key?
 Gui 4: Add, button, x500 y270 vsetapply gsetapply, Apply
 
 
@@ -281,7 +281,7 @@ Gui 4: Add, button, x500 y270 vsetapply gsetapply, Apply
 	GuiControl 4: hide, hand
 	GuiControl 4: hide, Handchoice
 	GuiControl 4: hide, ridkeyboard
-	GuiControl 4: hide, ctrlleft
+	GuiControl 4: hide, keyboardcontrol
 	GuiControl 4: hide, ctrlright
 	GuiControl 4: hide, updownmouse
 	GuiControl 4: hide, ctrlc
@@ -334,7 +334,7 @@ xpredefines:
 	GuiControl 4: hide, hand
 	GuiControl 4: hide, Handchoice
 	GuiControl 4: hide, ridkeyboard
-	GuiControl 4: hide, ctrlleft
+	GuiControl 4: hide, keyboardcontrol
 	GuiControl 4: hide, ctrlright
 	GuiControl 4: hide, updownmouse
 	GuiControl 4: hide, ctrlc
@@ -384,7 +384,7 @@ xtemplates:
 	GuiControl 4: hide, hand
 	GuiControl 4: hide, Handchoice
 	GuiControl 4: hide, ridkeyboard
-	GuiControl 4: hide, ctrlleft
+	GuiControl 4: hide, keyboardcontrol
 	GuiControl 4: hide, ctrlright
 	GuiControl 4: hide, updownmouse
 	GuiControl 4: hide, ctrlc
@@ -433,7 +433,7 @@ xmails:
 	GuiControl 4: hide, hand
 	GuiControl 4: hide, Handchoice
 	GuiControl 4: hide, ridkeyboard
-	GuiControl 4: hide, ctrlleft
+	GuiControl 4: hide, keyboardcontrol
 	GuiControl 4: hide, ctrlright
 	GuiControl 4: hide, updownmouse
 	GuiControl 4: hide, ctrlc
@@ -445,7 +445,7 @@ xsettings:
 
 Iniread, Handchoice, %settingsini%, Handchoice
 Iniread, ridkeyboard, %settingsini%, ridkeyboard 
-Iniread, ctrlleft, %settingsini%, ctrlleft
+Iniread, keyboardcontrol, %settingsini%, keyboardcontrol
 Iniread, ctrlright, %settingsini%, ctrlright
 Iniread, updownmouse, %settingsini%, updownmouse
 Iniread, ctrlc, %settingsini%, ctrlc
@@ -454,7 +454,7 @@ Iniread, middlekey, %settingsini%, middlekey
 
 GuiControl, 4:, Handchoice, %Handchoice%
 GuiControl, 4:, ridkeyboard, %ridkeyboard%
-GuiControl, 4:, ctrlleft, %ctrlleft% 
+GuiControl, 4:, keyboardcontrol, %keyboardcontrol% 
 GuiControl, 4:, ctrlright, %ctrlright% 
 GuiControl, 4:, updownmouse, %updownmouse% 
 GuiControl, 4:, ctrlc, %ctrlc% 
@@ -465,7 +465,7 @@ Gui 4: color, grey
 	GuiControl 4: show, hand
 	GuiControl 4: show, Handchoice
 	GuiControl 4: show, ridkeyboard
-	GuiControl 4: show, ctrlleft
+	GuiControl 4: show, keyboardcontrol
 	GuiControl 4: show, ctrlright
 	GuiControl 4: show, updownmouse
 	GuiControl 4: show, ctrlc
@@ -527,7 +527,7 @@ return
 setapply:
 guicontrolget, Handchoice
 guicontrolget, ridkeyboard
-guicontrolget, ctrlleft
+guicontrolget, keyboardcontrol
 guicontrolget, ctrlright
 guicontrolget, updownmouse
 guicontrolget, ctrlc
@@ -536,7 +536,7 @@ guicontrolget, middlekey
 
 Inidelete, %settingsini%, Handchoice
 Inidelete, %settingsini%, ridkeyboard
-Inidelete, %settingsini%, ctrlleft
+Inidelete, %settingsini%, keyboardcontrol
 Inidelete, %settingsini%, ctrlright
 Inidelete, %settingsini%, updownmouse
 Inidelete, %settingsini%, ctrlc
@@ -544,7 +544,7 @@ Inidelete, %settingsini%, middlekey
 
 Iniwrite, %Handchoice%, %settingsini%, Handchoice
 Iniwrite, %ridkeyboard%, %settingsini%, ridkeyboard
-Iniwrite, %ctrlleft%, %settingsini%, ctrlleft
+Iniwrite, %keyboardcontrol%, %settingsini%, keyboardcontrol
 Iniwrite, %ctrlright%, %settingsini%,ctrlright
 Iniwrite, %updownmouse%, %settingsini%, updownmouse
 Iniwrite, %ctrlc%, %settingsini%, ctrlc
@@ -737,7 +737,7 @@ else
 {
 clipboard = %pred0%
 send ^v
-sleep, 1000
+sleep, 500
 clipboard = %clipstore%
 clipstore =
 return
@@ -754,7 +754,54 @@ break
 }
 return
 
+~;::
+clipstore = %clipboardall%
+clipboard =
+sleep, 20
+input, pred, I V L20, {space},
+loop
+{
+test := arraytest[A_index]
+if test := pred
+{
 
+testLength := StrLen(pred) + 2
+Iniread, pred0, %fullpre%, %pred%
+sleep, 20
+if pred0 !=
+{
+sendinput,{backspace %testlength%}
+stringreplace, pred0, pred0, $enter$, `n,All
+ifWinActive, ahk_class RemoteToolsFrame
+{
+sendinput, %pred0%
+return
+}
+IfWinactive, ahk_class ConsoleWindowClass
+{
+Sendinput, %pred0%
+return 
+}
+else
+{
+clipboard = %pred0%
+send ^v
+sleep, 500
+clipboard = %clipstore%
+clipstore =
+return
+}
+
+
+
+}
+return
+
+}
+else
+break
+}
+return
 
 
 
@@ -1366,7 +1413,7 @@ Guicontrol, 1: ,Text4,
 Guicontrol, 3:, view, %fullview%
 
 tooltip, %Nrvar1%. "%linevar1%"
-SetTimer, RemoveToolTip, -1500
+SetTimer, RemoveToolTip, -1000
 
 
 return
@@ -1411,7 +1458,7 @@ fullview := mainarray[countchange]
 Guicontrol, 3:, view, %fullview%
 
 tooltip, %Nrvar1%. "%linevar1%"
-SetTimer, RemoveToolTip, -1500
+SetTimer, RemoveToolTip, -1000
 return
 }
 else
@@ -1462,7 +1509,7 @@ Guicontrol, 3:, view, %fullview%
 
 
 tooltip, %Nrvar1%. "%linevar1%"
-SetTimer, RemoveToolTip, -1500
+SetTimer, RemoveToolTip, -1000
 return
 
 ;releaseall-------------------------------------------------------------------------------------------------------------
@@ -1525,15 +1572,8 @@ brelease = false
 Inidelete, %releaseini%, alllines
 return
 
-server:
-return
 
 
-^b::
-gui, font, s9 cRed bold
-GuiControl, Font, Textmain										
-countcontrol = 0
-return
 
 
 #if ctrlc
@@ -1543,37 +1583,14 @@ gosub, fcopy
 return
 }
 #if
-~^Lbutton::
-gosub, fcopy
-return
-$^+backspace::
-Gosub, fdelete
-return
-$^wheelup::
+
+
+#if ridkeyboard
+{
+~Lbutton & wheelup::
 Gosub, Fup
 return
-$^Up::
-Gosub, Fup
-return
-$^wheeldown::
-Gosub, Fdown
-return
-$^down::
-Gosub, Fdown
-return
-$^mbutton::
-Gosub, releaseall8
-return
-$^Rbutton::
-Gosub, pasteClip2
-return
-^space::
-Gosub, pasteClip2
-return
-~Lbutton & ~wheelup::
-Gosub, Fup
-return
-~Lbutton & ~wheeldown::
+~Lbutton & wheeldown::
 Gosub, Fdown
 return
 ~$mbutton::
@@ -1586,8 +1603,56 @@ return
 ~Lbutton & mbutton::
 gosub, releaseall8
 return
+}
+#if
 
 
 
+#if keyboardcontrol
+{
+$^Up::
+Gosub, Fup
+return
+$^down::
+Gosub, Fdown
+return
+^+space::
+Gosub, releaseall8
+gosub, pasteclip2
+return
+^space::
+Gosub, pasteClip2
+return
+}
+#if
+
+
+#if handchoice
+{
+^Lbutton::
+gosub, fcopy
+return
+
+$^wheelup::
+Gosub, Fup
+return
+
+$^wheeldown::
+Gosub, Fdown
+return
+
+$^mbutton::
+Gosub, releaseall8
+return
+$^Rbutton::
+Gosub, pasteClip2
+return
+}
+#if
+
+
+$^+backspace::
+Gosub, fdelete
+return
 
 
