@@ -697,35 +697,20 @@ ok:
         if test := pred
         {
             
-            testLength := StrLen(pred) + 2
             Iniread, pred0, %fullpre%, %pred%
             sleep, 20
             if pred0 !=
             {
-                sendinput,{backspace %testlength%}
+                send ^{backspace}
+                send {backspace}
                 stringreplace, pred0, pred0, $enter$, `n,All
-                ifWinActive, ahk_class RemoteToolsFrame
-                {
-                    sendinput, %pred0%
-                    return
-                }
-                IfWinactive, ahk_class ConsoleWindowClass
-                {
-                    Sendinput, %pred0%
-                    return 
-                }
-                else
-                {
+                
                     clipboard = %pred0%
                     send ^v
-                    sleep, 500
+                    sleep, 750
                     clipboard = %clipstore%
                     clipstore =
-                    return
-                }
-                
-                
-                
+                    return    
             }
             return
             
@@ -736,52 +721,35 @@ ok:
 return
 
 ~;::
-clipstore = %clipboardall%
 clipboard =
-sleep, 20
-input, pred, I V L20, {space},
-loop
-{
-    test := arraytest[A_index]
-    if test := pred
+    sleep, 20
+    input, pred, I V L20, {space},
+    loop
     {
-        
-        testLength := StrLen(pred) + 2
-        Iniread, pred0, %fullpre%, %pred%
-        sleep, 20
-        if pred0 !=
+        test := arraytest[A_index]
+        if test := pred
         {
-            sendinput,{backspace %testlength%}
-            stringreplace, pred0, pred0, $enter$, `n,All
-            ifWinActive, ahk_class RemoteToolsFrame
-            {
-                sendinput, %pred0%
-                return
-            }
-            IfWinactive, ahk_class ConsoleWindowClass
-            {
-                Sendinput, %pred0%
-                return 
-            }
-            else
-            {
-                clipboard = %pred0%
-                send ^v
-                sleep, 500
-                clipboard = %clipstore%
-                clipstore =
-                return
-            }
             
-            
+            testLength := StrLen(pred) + 2
+            Iniread, pred0, %fullpre%, %pred%
+            sleep, 20
+            if pred0 !=
+            {
+                send ^{backspace}
+                send {backspace}
+                stringreplace, pred0, pred0, $enter$, `n,All
+                
+                    clipboard = %pred0%
+                    clipwait, 2, 1
+                    send ^v
+                    return    
+            }
+            return
             
         }
-        return
-        
+        else
+            break
     }
-    else
-        break
-}
 return
 
 modifybutton:
