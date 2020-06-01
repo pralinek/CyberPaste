@@ -14,7 +14,7 @@ Nrarray := []
 nrshortarray := []
 arraytest := []
 mailarray := []
-
+arraymacro :=[]
 CoordMode, tooltip, screen
 
 counttotal = 0
@@ -813,20 +813,21 @@ mcreate:
     arraymacro := {}
     Guicontrolget, view2
     GuiControlGet,makros
+    stringreplace,view2, view2, `n, $enter$, All
     Iniread, mkontrol, %macropre%, %makros%
     if view2 !=
         if makros !=
         if mkontrol =
     {
-        stringreplace,view2, view2, `n, $enter$, All
+        
         Iniwrite, %view2%, %macropre%, %makros%,
         
         IniRead, lmacro, %macropre%
-        Stringreplace, lmacro2, lmacro, `n, |, all
+        Stringreplace, lmacro, lmacro, `n, |, all
         GuiControl, , mylistboxmacro, |
-        GuiControl, , mylistboxmacro, %lmacro2%
+        GuiControl, , mylistboxmacro, %lmacro%
         
-        Loop, parse, lmacro2, |
+        Loop, parse, lmacro, |
         {
             arraymacro.push(A_loopfield)
                 Gui +LastFound
@@ -919,10 +920,10 @@ modifybutton2:
     Guicontrolget, viewp2
     
     IniDelete, %macropre%, %listbox2%, 
-    stringreplace,viewp2, viewp2, !,{!}
+    
     stringreplace,viewp2, viewp2, `n,$enter$,All
     Iniwrite, %viewp2%, %macropre%, %listbox2%
-    
+    StringReplace, viewp2, viewp2,$enter$, `n,All
     msgbox, environemntal predefine modified to: `n`n%viewp2%
 return
 
