@@ -818,7 +818,6 @@ mcreate:
         if makros !=
         if mkontrol =
     {
-        stringreplace,view2, view2, !, {!}
         stringreplace,view2, view2, `n, $enter$, All
         Iniwrite, %view2%, %macropre%, %makros%,
         
@@ -844,7 +843,7 @@ mcreate:
     }
 return
 
-~+>::
+~.::
     Nrvarmacro := nrshortarray[countchange]
     nrvarmacro1 := nrvarmacro - 1
     nrvarmacro2 := nrvarmacro - 2
@@ -878,6 +877,7 @@ return
             Iniread, markmacro, %macropre%, %mark%,
             if markmacro !=
             {
+                StringReplace, markmacro, markmacro,$enter$,`n,All
                 stringreplace, markmacro, markmacro, clip0, %clip0%, All	
                 stringreplace, markmacro, markmacro, clip1, %clip1%, All
                 stringreplace, markmacro, markmacro, clip2, %clip2%, All
@@ -888,31 +888,11 @@ return
                 stringreplace, markmacro, markmacro, clip7, %clip7%, All
                 stringreplace, markmacro, markmacro, clip8, %clip8%, All
                 stringreplace, markmacro, markmacro, clip9, %clip9%, All
-                StringReplace, markmacro, markmacro,$enter$(tab)$enter$,`t,All
-                StringReplace, markmacro, markmacro,$enter$(tab),`t,All
-                StringReplace, markmacro, markmacro,(tab)$enter$,`t,All
-                StringReplace, markmacro, markmacro,$enter$,`n,All
-                Stringreplace, markmacro, markmacro, (tab),`t,All
-                >
-                Loop, parse, markmacro, `t
-                {
-                    arraylines.push(A_loopfield)
-                        varmacro := A_index
-                }
-                firstline := arraylines[1]
-                sendinput,{backspace %testlength%}
-                sendinput, %firstline%
                 
-                loopvar := varmacro - 1
-                    
-                Loop, %loopvar%
-                {
-                    loopvar2 := A_index + 1
-                        varline := arraylines[loopvar2]
-                    sleep, 40
-                    sendinput, {tab}%varline%
-                }
-                
+               sendinput,{backspace %testlength%}
+               clipboard = %markmacro%
+               ClipWait, [2, 1]
+               send ^v
             }
             return
         }
@@ -1340,7 +1320,7 @@ fcopy:
     ;Delete;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Fdelete:
     sleep, 50
-    gui, font, s12 cyellow bold
+    gui, font, s8 cyellow bold
     GuiControl, Font, Textmain
     
     RemovedValue := Mainarray.RemoveAt(counttotal)
@@ -1615,4 +1595,3 @@ return
 $^+backspace::
     Gosub, fdelete
 return
-
