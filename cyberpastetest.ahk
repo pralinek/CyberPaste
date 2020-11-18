@@ -1,6 +1,9 @@
 #SingleInstance Force
     #Maxmem
 
+
+
+
 ifExist, %A_ScriptDir%\cyberfiles\clipboards
     FileRemoveDir, %A_WorkingDir%\cyberfiles\clipboards,1
 
@@ -1620,4 +1623,72 @@ return
 $^+backspace::
     Gosub, fdelete
 return
+
+onclipboardchange:
+if DllCall("IsClipboardFormatAvailable", "Uint", 2){
+sleep, 500
+loop, 1
+        {
+            counttotal := counttotal + 1
+            countcontrol := countcontrol + 1
+            countchange := countchange + 1
+            countdelete := countchange + 1
+            countminus := countchange + 1
+            count2 := counttotal - 1
+            count1 := count2 - 1
+        }
+        clip1 := clipboard
+        Mainarray.push(clip1)
+        
+        shortclip := substr(clip1, 1, 60)
+        shortclip:=RegExReplace(shortclip,"^\R|\R>\d*$")
+        shortclip:=RegExReplace(shortclip, "\R+\R", "`r`n") 
+        
+        
+        
+        shortarray.push(shortclip)
+        Nrshortarray.push(countcontrol)
+        
+        
+        
+        
+        
+        Nrvar1 := Nrshortarray[counttotal]
+        Nrvar2 := Nrshortarray[count1]
+        Nrvar3 := Nrshortarray[count2]
+        nrvarminus := Nrarray[countminus]
+        linevar1 := shortarray[counttotal]
+        linevar2 := shortarray[count1]
+        linevar3 := shortarray[count2]
+        
+        
+        
+        Guicontrol, 2: ,Textmain, %linevar1%
+        Guicontrol, 1: ,TextMain, %nrvar1%.%linevar1%
+        Guicontrol, 1: ,Text1, %nrvar2%.%linevar2%
+        Guicontrol, 1: ,Text2, %nrvar3%.%linevar3%
+        Guicontrol, 1: ,Text4, 
+        sleep 10
+        tooltip, %Nrvar1%. %linevar1%
+        SetTimer, RemoveToolTip, -1000
+        
+        FileAppend,%ClipboardAll%,cyberfiles\clipboards\%counttotal%.clip,
+        
+        if onvar2 = false
+        {
+            fullview := mainarray[countchange]
+            Guicontrol, 3:, view, %fullview%
+        }
+        
+        
+        clipchange = false
+        return
+
+
+
+}
+
+return
+
+
 
